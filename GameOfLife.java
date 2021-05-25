@@ -2,13 +2,24 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.JFrame;
-public class GameOfLife extends JPanel{
+public class workspace extends JPanel{
 	static int generationNum = 0;
 	static Timer timer;
+	static boolean ifPulsar = false;
+	static boolean ifGlider = false;
+	static boolean ifRandomBoard = false;
 	//note that x is horizontal and y is vertical
 	static int boardSizeX = 15, boardSizeY = 15;
-	static int[][] board = 
-		{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	static int[][] board;
+	static int xInc, yInc;
+	static int[][] oldBoard = new int[boardSizeY][boardSizeX];
+	
+	public static void main(String[] args) {
+		if(ifRandomBoard){
+			board = new int[boardSizeY][boardSizeX];
+			randomBoard();
+		}else if(ifPulsar){
+			int[][] tempBoard = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -23,7 +34,9 @@ public class GameOfLife extends JPanel{
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-		/*{ {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			board = tempBoard;
+		}else if(ifGlider){
+			int[][] tempBoard ={ {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,1,1,1,1,0,0,0,0},
@@ -38,11 +51,10 @@ public class GameOfLife extends JPanel{
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-			//new int[boardSizeY][boardSizeX];*/
-	static int xInc, yInc;
-	static int[][] oldBoard = new int[boardSizeY][boardSizeX];
-	public static void main(String[] args) {
-		//randomBoard();
+			board = tempBoard;
+		}else {
+			board = new int[boardSizeY][boardSizeX];
+		}
 		graphicsSystem();
 	}
 	
@@ -149,7 +161,7 @@ public class GameOfLife extends JPanel{
 	}
 
 	static void graphicsSystem() {
-		  	GameOfLife d = new GameOfLife();
+		  	workspace d = new workspace();
 			JFrame f = new JFrame("Display Graphics Drawings");
 			f.add(d);
 			f.setSize(1000,1000);
